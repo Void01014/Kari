@@ -10,7 +10,6 @@
     session_start();
 
     $user = $_SESSION['user_object'] ?? null;
-    // var_dump($role = $_SESSION['user_object']);
 
 
     $db = new Database("localhost", "kari_db", "root", "");
