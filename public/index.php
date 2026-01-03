@@ -6,6 +6,7 @@
     require_once "../app/controllers/HomeController.php";
     require_once "../app/controllers/UserController.php";
     require_once "../app/controllers/HostController.php";
+    require_once "../app/controllers/ListingController.php";
     
     session_start();
 
@@ -18,6 +19,7 @@
     $userController = new UserController($pdo);
     $homeController = new HomeController($pdo);
     $hostController = new HostController($pdo);
+    $listingController = new ListingController($pdo);
     $whiteList = ["login", "signUp", "login-action", "register-action"];
     
     if (!isset($_SESSION['logged_in']) && !in_array($url, $whiteList)) {
@@ -49,10 +51,10 @@
             $userController->showProfile();         
             break;
         case 'addListing':
-            $hostController->showListingForm();         
+            $listingController->showListingForm();         
             break;
         case 'addListing-action':
-            $hostController->registerListing();         
+            $listingController->registerListing();         
             break;
         case 'logout-action':
             $authController->logout();         
