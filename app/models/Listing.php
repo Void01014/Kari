@@ -5,9 +5,9 @@ class Listing
     private $id;
     private $title;
     private $description;
-    private $price;
+    private $price_per_night;
     private $location;
-    private $image;
+    private $image_url;
     private $publish_date;
 
     public function __construct($pdo)
@@ -20,17 +20,20 @@ class Listing
     public function getID(){
         return $this->id;
     }
-    public function getTitele(){
+    public function getTitle(){
         return $this->title;
     }
     public function getDescription(){
         return $this->description;
     }
     public function getPrice(){
-        return $this->price;
+        return $this->price_per_night;
+    }
+    public function getLocation(){
+        return $this->location;
     }
     public function getImage(){
-        return $this->image;
+        return $this->image_url;
     }
     public function getPubDate(){
         return $this->publish_date;
@@ -48,7 +51,7 @@ class Listing
     }
     private function validatePrice()
     {
-        return $this->price > 0;
+        return $this->price_per_night > 0;
     }
 
 
@@ -71,7 +74,7 @@ class Listing
     }
     public function setPrice($price)
     {
-        $this->price = $price;
+        $this->price_per_night = $price;
     }
     public function setLocation($location)
     {
@@ -79,7 +82,7 @@ class Listing
     }
     public function setImage($image)
     {
-        $this->image = $image;
+        $this->image_url = $image;
     }
 
     ////////////////////////////////////////////
@@ -94,19 +97,19 @@ class Listing
             ':hostID'          => $hostID,
             ':title'           => $this->title,
             ':description'     => $this->description,
-            ':price_per_night' => $this->price,
+            ':price_per_night' => $this->price_per_night,
             ':location'        => $this->location,
-            ':image_url'       => $this->image
+            ':image_url'       => $this->image_url
         ]);
     }
 
     ////////////////////////////////////////////
 
-    public function getAll()
+    public static function getAllListings($pdo)
     {
         $listings = [];
         $sql = "SELECT * FROM listing WHERE status = 'active'";
-        $stmt = $this->pdo->query($sql);
-        
+        $stmt = $pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Listing', [$pdo]);
     }
 }

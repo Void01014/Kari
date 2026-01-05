@@ -24,6 +24,7 @@
         }
 
         public function showAllListings(){
+            $listings = Listing::getAllListings($this->pdo);
             $pageTitle = "allListings";
 
             ob_start();
@@ -66,6 +67,5 @@
                 header("location: /Kari/addListing");
                 exit();
             }
-
         }
     }
