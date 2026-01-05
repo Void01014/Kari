@@ -7,6 +7,7 @@ class user
     private $email;
     private $password;
     private $role;
+    private $status;
 
     public function __construct($pdo)
     {
@@ -76,6 +77,10 @@ class user
     {
         $this->role = $role;
     }
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
 
     ////////////////////////////////////////////
 
@@ -102,7 +107,7 @@ class user
 
     public function LoadByEmail($email, $password)
     {
-        $sql = "SELECT id, username, email, password_hash FROM users WHERE email = :email";
+        $sql = "SELECT id, username, email, password_hash, role, status FROM users WHERE email = :email";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':email' => $email]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -111,6 +116,8 @@ class user
             $this->id = $row['id'];
             $this->setName($row['username']);
             $this->setEmail($row['email']);
+            $this->setRole($row['role']);
+            $this->setStatus($row['status']);
 
             return true; 
         }

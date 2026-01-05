@@ -22,6 +22,18 @@
             include "../app/views/main.php";
             
         }
+
+        public function showAllListings(){
+            $pageTitle = "allListings";
+
+            ob_start();
+            include "../app/views/listings/listings.php";
+            
+            $content = ob_get_clean();
+            
+            include "../app/views/main.php";
+            
+        }
         
         ////////////////////////////////////////////
 

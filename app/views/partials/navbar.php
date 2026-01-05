@@ -23,13 +23,13 @@
                 </svg>
                 Profile
             </a>
-            <!-- Listings only for Travelers -->
-                    <a href="home" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-9 9m-9-9l9 9" />
-                    </svg>
-                    Listings
-                    </a>
+            
+            <a href="allListings" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-9 9m-9-9l9 9" />
+            </svg>
+            Listings
+            </a>
 
             <?php if ($role === 'host'): ?>
                     <a href="myListings" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">

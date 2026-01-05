@@ -102,24 +102,11 @@ class Listing
 
     ////////////////////////////////////////////
 
-    // public function Load()
-    // {
-    //     $sql = "SELECT id, username, email, password_hash FROM users WHERE email = :email";
-    //     $stmt = $this->pdo->prepare($sql);
-    //     $stmt->execute([':email' => $email]);
-    //     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    //     if ($row && $this->verify_password($password, $row['password_hash'])) {
-    //         $this->id = $row['id'];
-    //         $this->setName($row['username']);
-    //         $this->setEmail($row['email']);
-
-    //         return true; 
-    //     }
-    //     return false;    
-    // }
-
-    // public function __sleep() {
-    //     return ['id', 'name', 'email', 'role'];
-    // }
+    public function getAll()
+    {
+        $listings = [];
+        $sql = "SELECT * FROM listing WHERE status = 'active'";
+        $stmt = $this->pdo->query($sql);
+        
+    }
 }

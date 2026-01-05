@@ -11,7 +11,7 @@
     session_start();
 
     $user = $_SESSION['user_object'] ?? null;
-
+    
     $db = new Database("localhost", "kari_db", "root", "");
     $pdo = $db->getConnection();
     $url = $_GET['url'] ?? 'home';
@@ -55,6 +55,9 @@
             break;
         case 'addListing-action':
             $listingController->registerListing();         
+            break;
+        case 'allListings':
+            $listingController->showAllListings();         
             break;
         case 'logout-action':
             $authController->logout();         
