@@ -1,7 +1,5 @@
 
     <main class="md:w-[30%] h-[100vh]">
-        <?php echo password_hash("useradmin", PASSWORD_DEFAULT);
-?>
         <div class="flex justify-center items-center overlay absolute left-0 h-[100vh] w-[100vw] bg-[#00000070] hidden" id="overlay" aria-hidden="true">
             <div class="modal bg-white w-[500px] rounded-2xl p-10 flex flex-col items-center gap-4">
                 <h2 class="text-2xl" id="modalTitle">Verification</h2>

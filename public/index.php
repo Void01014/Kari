@@ -59,6 +59,9 @@
         case 'allListings':
             $listingController->showAllListings();         
             break;
+        case 'bookListing':
+            $listingController->showBookListing();         
+            break;
         case 'logout-action':
             $authController->logout();         
             break;

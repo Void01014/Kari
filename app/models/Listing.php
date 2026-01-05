@@ -3,6 +3,8 @@ class Listing
 {
     private $pdo;
     private $id;
+    private $hostID;
+    private $hostName;
     private $title;
     private $description;
     private $price_per_night;
@@ -19,6 +21,12 @@ class Listing
 
     public function getID(){
         return $this->id;
+    }
+    public function getHostID(){
+        return $this->hostID;
+    }
+    public function getHostName(){
+        return $this->hostName;
     }
     public function getTitle(){
         return $this->title;
@@ -64,6 +72,14 @@ class Listing
 
     ////////////////////////////////////////////
 
+    public function setHostID($hostID)
+    {
+        $this->hostID = $hostID;
+    }
+    public function setHostName($hostName)
+    {
+        $this->hostName = $hostName;
+    }
     public function setTitle($title)
     {
         $this->title = $title;
@@ -83,6 +99,10 @@ class Listing
     public function setImage($image)
     {
         $this->image_url = $image;
+    }
+    public function setPubDate($publish_date)
+    {
+        $this->publish_date = $publish_date;
     }
 
     ////////////////////////////////////////////
@@ -108,8 +128,31 @@ class Listing
     public static function getAllListings($pdo)
     {
         $listings = [];
-        $sql = "SELECT * FROM listing WHERE status = 'active'";
+        $sql = "SELECT listing.*, users.id AS hostID,users.username AS hostName FROM listing JOIN users ON listing.hostID = users.id HAVING status='active'";
         $stmt = $pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_CLASS, 'Listing', [$pdo]);
+    }
+
+    public function getListingsDetails($id)
+    {
+        $sql = "SELECT listings.*, users.id AS hostID,users.username AS hostName FROM listing JOIN users ON listings.hostID = users.id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $this->id = $row['id'];
+            // $this->se    tHostID($row['hostID']);
+            // $this->setHostName($row['hostName']);
+            // $this->setTitle($row['username']);
+            // $this->setDesc($row['email']);
+            // $this->setPrice($row['role']);
+            // $this->setLocation($row['status']);
+            // $this->setImage($row['status']);
+            // $this->setPubDate($row['publish_date']);
+
+            return true; 
+        }
+        return false;    
     }
 }

@@ -15,7 +15,7 @@
             $pageTitle = "ListingForm";
 
             ob_start();
-            include "../app/views/host/addListing.php";
+            include "../app/views/listings/addListing.php";
             
             $content = ob_get_clean();
             
@@ -35,6 +35,33 @@
             include "../app/views/main.php";
             
         }
+
+        public function showBookListing(){
+            $listings = Listing::getAllListings($this->pdo);
+            $pageTitle = "allListings";
+
+            ob_start();
+            include "../app/views/listings/listings.php";
+            
+            $content = ob_get_clean();
+            
+            include "../app/views/main.php";
+            
+        }
+
+        // public function showListingsDetails(){
+        //     $listing = new Listing($this->pdo);
+        //     $Listing->getListingsDetails();
+        //     $pageTitle = "allListings";
+
+        //     ob_start();
+        //     include "../app/views/listings/listings.php";
+            
+        //     $content = ob_get_clean();
+            
+        //     include "../app/views/main.php";
+            
+        // }
         
         ////////////////////////////////////////////
 
