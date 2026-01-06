@@ -1,5 +1,5 @@
 <?php
-    class ListingController{
+    class BookingController{
         private $pdo;
 
         ////////////////////////////////////////////
@@ -8,51 +8,10 @@
         {
             $this->pdo = $pdo;
         }
-
-        ////////////////////////////////////////////
-        
-        public function showListingForm(){
-            $pageTitle = "ListingForm";
-
-            ob_start();
-            include "../app/views/listings/addListing.php";
-            
-            $content = ob_get_clean();
-            
-            include "../app/views/main.php";
-            
-        }
-
-        public function showAllListings(){
-            $listings = Listing::getAllListings($this->pdo);
-            $pageTitle = "allListings";
-
-            ob_start();
-            include "../app/views/listings/listings.php";
-            
-            $content = ob_get_clean();
-            
-            include "../app/views/main.php";
-            
-        }
-
-        // public function showListingsDetails(){
-        //     $listing = new Listing($this->pdo);
-        //     $Listing->getListingsDetails();
-        //     $pageTitle = "allListings";
-
-        //     ob_start();
-        //     include "../app/views/listings/listings.php";
-            
-        //     $content = ob_get_clean();
-            
-        //     include "../app/views/main.php";
-            
-        // }
         
         ////////////////////////////////////////////
 
-        public function registerListing(){
+        public function registerBooking(){
             $image = time() . "_" . $_FILES['image']['name'];
             $destination = __DIR__ . "/../../public/uploads/" . $image;
 

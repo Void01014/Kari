@@ -1,4 +1,4 @@
-RewriteEngine On
+RewriteEngine on
 
 # Redirect all traffic to the public/index.php file
 RewriteCond %{REQUEST_FILENAME} !-f

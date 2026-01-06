@@ -111,7 +111,7 @@ if (isset($_SESSION['user_object'])) {
 
             <h2 class="text-3xl font-bold text-gray-800 mb-6">Book Your Stay</h2>
 
-            <form id="bookingFormElement" method="POST" action="booking-action" class="space-y-6">
+            <form id="bookingFormElement" method="POST" action="book-action" class="space-y-6">
                 <input type="hidden" name="listing_id" id="bookingListingId">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
