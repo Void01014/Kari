@@ -12,13 +12,13 @@
         ////////////////////////////////////////////
 
         public function showHome(){
-            // $pageTitle = "home";
+            $pageTitle = "home";
 
-            // ob_start();
-            // include __DIR__ . "/app/views/auth/signIn.php";
+            ob_start();
+            include "../app/views/home/home.php";
             
-            // $content = ob_get_clean();
+            $content = ob_get_clean();
             
-            // include __DIR__ . "/app/views/main.php";
+            include "../app/views/main.php";
         }
     }

@@ -20,7 +20,7 @@
     $homeController = new HomeController($pdo);
     $hostController = new HostController($pdo);
     $listingController = new ListingController($pdo);
-    $whiteList = ["login", "signUp", "login-action", "register-action"];
+    $whiteList = ["home", "login", "signUp", "login-action", "register-action"];
     
     if (!isset($_SESSION['logged_in']) && !in_array($url, $whiteList)) {
         header('Location: /Kari/signUp');

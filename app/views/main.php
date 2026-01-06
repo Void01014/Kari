@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/Kari/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Listings</title>
@@ -145,6 +145,12 @@
             <?php unset($_SESSION['success_listing_registration']); ?>
         <?php endif; ?>
 </body>
-    <script src="/Kari/public/js/signUp.js"></script>
-    <script src="/Kari/public/js/signIn.js"></script>
+    <?php $url = $_GET['url'] ?? 'home' ?> 
+    <?php if($url == "signUp"): ?>
+        <script src="/Kari/public/js/signUp.js"></script>
+    <?php elseif($url == "signIn"): ?>
+        <script src="/Kari/public/js/signIn.js"></script>
+    <?php elseif($url == "allListings"): ?>
+        <script src="/Kari/public/js/listings.js"></script>
+    <?php endif; ?>
 </html>
