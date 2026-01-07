@@ -1,3 +1,11 @@
 #listingModal{
     background-color: rgba(0, 0, 0, 0.55);
 }
+
+#addListingBtn{
+    background-color: rgba(0, 0, 0, 0.258);
+}
+
+#addListingBtn:hover{
+    background-color: white;
+}

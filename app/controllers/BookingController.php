@@ -12,32 +12,45 @@
         ////////////////////////////////////////////
 
         public function registerBooking(){
-            $image = time() . "_" . $_FILES['image']['name'];
-            $destination = __DIR__ . "/../../public/uploads/" . $image;
+            $traveler_id = $_SESSION["user_object"]->getID() ?? '';
+            $listing_id = $_POST['listing_id'];
+            $guests = $_POST['guests'];
+            $start_date = new DateTime($_POST['start_date'])    ;
+            $end_date = new DateTime($_POST['end_date']);
+            $booking = new Booking($this->pdo);
+            $booking->setListingID($listing_id);
+            $listingData = $booking->getListingData();
+            var_dump($listingData);
+            if($listingData){
+                $price_per_night=  $listingData['price_per_night'];
+                $interval = $start_date->diff($end_date);
+                $days = $interval->days;
 
-            move_uploaded_file($_FILES['image']['tmp_name'], $destination);
+                $booking->setHostID($listingData['hostID']);
+                $booking->setTravelerID($traveler_id);
+                $booking->setTotalPrice($price_per_night * $days);
+                $booking->setStartDate($start_date);
+                $booking->setEndDate($end_date);
+                $booking->setGuests($guests);
+                
+                if ($days < 1) {
+                   die("Error: Minimum stay is 1 night.");
+                }
 
-            $hostID = $_SESSION['user_object']->getID();
-            $title = $_POST['title'];
-            $description = $_POST['description'];
-            $price = $_POST['price'];
-            $location = $_POST['location'];
+            }else {
+                die("Listing not found.");
+            }
 
-            $listing = new Listing($this->pdo);
 
-            $listing->setTitle($title);
-            $listing->setDesc($description);
-            $listing->setPrice($price);
-            $listing->setLocation($location);
-            $listing->setImage($image);
 
-            if($listing->validateAll() && $hostID){
-                $listing->push($hostID);
-                $_SESSION['success_listing_registration'] = true;
-                header("Location: /Kari/addListing");
+
+            if($booking->isAvailable($listing_id, $start_date, $end_date)){
+                $booking->push();
+                $_SESSION['success_booking_registration'] = true;
+                header("Location: /Kari/allListings");
                 exit;
             }else{
-                header("location: /Kari/addListing");
+                header("location: /Kari/allListings");
                 exit();
             }
         }

@@ -1,6 +1,7 @@
 <?php
     require_once "../app/models/User.php";
     require_once "../app/models/Listing.php";
+    require_once "../app/models/Booking.php";
     require_once "../app/core/Database.php";
     require_once "../app/controllers/AuthController.php";
     require_once "../app/controllers/HomeController.php";
@@ -62,7 +63,7 @@
             $listingController->showAllListings();         
             break;
         case 'book-action':
-            $bookingController->RegisterBooking();         
+            $bookingController->registerBooking();         
             break;
         case 'logout-action':
             $authController->logout();         

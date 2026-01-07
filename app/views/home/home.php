@@ -26,7 +26,7 @@
                     Browse Listings
                 </a>
                 <?php if ($_SESSION['user_object']->getRole() === 'host'): ?>
-                    <a href="addListing-action" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-cyan-400 hover:scale-105 transition duration-200">
+                    <a id="addListingBtn" href="addListing-action" class="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:text-cyan-400 hover:scale-105 transition duration-200">
                         Add Your Listing
                     </a>
                 <?php endif; ?>

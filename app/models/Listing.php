@@ -132,27 +132,4 @@ class Listing
         $stmt = $pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_CLASS, 'Listing', [$pdo]);
     }
-
-    public function getListingsDetails($id)
-    {
-        $sql = "SELECT listings.*, users.id AS hostID,users.username AS hostName FROM listing JOIN users ON listings.hostID = users.id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':id' => $id]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($row) {
-            $this->id = $row['id'];
-            // $this->se    tHostID($row['hostID']);
-            // $this->setHostName($row['hostName']);
-            // $this->setTitle($row['username']);
-            // $this->setDesc($row['email']);
-            // $this->setPrice($row['role']);
-            // $this->setLocation($row['status']);
-            // $this->setImage($row['status']);
-            // $this->setPubDate($row['publish_date']);
-
-            return true; 
-        }
-        return false;    
-    }
 }

@@ -41,7 +41,7 @@
             $role = $_POST["role"];
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
-            $user = new user($this->pdo);
+            $user = new User($this->pdo);
             $user->setName($username);
             $user->setEmail($email);
             $user->setpassword($hash);
@@ -63,7 +63,7 @@
             $email = $_POST["email"];
             $password = $_POST["password"];
 
-            $user = new user($this->pdo);
+            $user = new User($this->pdo);
             
             if ($user->LoadByEmail($email, $password)) {
                 $_SESSION['logged_in'] = true;

@@ -134,6 +134,7 @@
         </script>
         <?php unset($_SESSION['success_user_registration']); ?>
         <?php endif; ?>
+
         <?php if(isset($_SESSION['success_listing_registration'])): ?>
             <script>
                 Swal.fire({
@@ -144,6 +145,18 @@
             </script>
             <?php unset($_SESSION['success_listing_registration']); ?>
         <?php endif; ?>
+
+        <?php if(isset($_SESSION['success_booking_registration'])): ?>
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Good Job',
+                    text: 'You have booked a listing successfully'
+                });
+            </script>
+            <?php unset($_SESSION['success_booking_registration']); ?>
+        <?php endif; ?>
+
 </body>
     <?php $url = $_GET['url'] ?? 'home' ?> 
     <?php if($url == "signUp"): ?>

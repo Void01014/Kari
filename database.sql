@@ -22,3 +22,17 @@ CREATE TABLE listings (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (host_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE bookings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    listing_id INT NOT NULL,
+    user_id INT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    guests INT,
+    total_price DECIMAL(10, 2),
+    status ENUM('confirmed', 'cancelled', 'completed') DEFAULT 'confirmed',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (listing_id) REFERENCES listing(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);

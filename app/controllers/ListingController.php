@@ -35,20 +35,6 @@
             include "../app/views/main.php";
             
         }
-
-        // public function showListingsDetails(){
-        //     $listing = new Listing($this->pdo);
-        //     $Listing->getListingsDetails();
-        //     $pageTitle = "allListings";
-
-        //     ob_start();
-        //     include "../app/views/listings/listings.php";
-            
-        //     $content = ob_get_clean();
-            
-        //     include "../app/views/main.php";
-            
-        // }
         
         ////////////////////////////////////////////
 
@@ -72,7 +58,7 @@
             $listing->setLocation($location);
             $listing->setImage($image);
 
-            if($listing->validateAll() && $hostID){
+            if($listing->validateAll()){
                 $listing->push($hostID);
                 $_SESSION['success_listing_registration'] = true;
                 header("Location: /Kari/addListing");
