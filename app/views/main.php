@@ -149,14 +149,24 @@
         <?php endif; ?>
 
         <?php if(isset($_SESSION['success_booking_registration'])): ?>
-            <script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Good Job',
-                    text: 'You have booked a listing successfully'
-                });
-            </script>
-            <?php unset($_SESSION['success_booking_registration']); ?>
+            <?php if($_SESSION['success_booking_registration'])?>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Good Job',
+                        text: 'You have booked a listing successfully'
+                    });
+                </script>
+                <?php unset($_SESSION['success_booking_registration']); ?>
+            <?php elseif(isset($_SESSION['error_booking_registration'])):?>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something went wrong',
+                        text: 'The day(s) you selected are already booked, please try again'
+                    });
+                </script>
+                <?php unset($_SESSION['error_booking_registration']); ?>
         <?php endif; ?>
 
 </body>

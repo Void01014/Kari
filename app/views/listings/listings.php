@@ -17,52 +17,56 @@ if (isset($_SESSION['user_object'])) {
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <?php if (!empty($listings)): ?>
-            <?php foreach ($listings as $listing): ?>
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] hover:scale-105 transition duration-300 cursor-pointer"
-                    onclick='openModal(<?php echo json_encode([
-                                            "id" => $listing->getId(),
-                                            "title" => $listing->getTitle(),
-                                            "description" => $listing->getDescription(),
-                                            "price" => $listing->getPrice(),
-                                            "image" => $listing->getImage(),
-                                            "location" => $listing->getLocation(),
-                                            "hostId" => $listing->getHostID(),
-                                            "hostName" => $listing->getHostName()
-                                        ]); ?>)'>
+    <?php if (!empty($listings)): ?>
+    <?php foreach ($listings as $listing): ?>
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] hover:scale-105 transition duration-300 cursor-pointer relative"
+            onclick='openModal(<?php echo json_encode([
+                "id" => $listing->getId(),
+                "title" => $listing->getTitle(),
+                "description" => $listing->getDescription(),
+                "price" => $listing->getPrice(),
+                "image" => $listing->getImage(),
+                "location" => $listing->getLocation(),
+                "hostId" => $listing->getHostID(),
+                "hostName" => $listing->getHostName()
+            ]); ?>)'>
 
-                    <div class="h-48 bg-gradient-to-br from-indigo-400 to-cyan-400 flex items-center justify-center">
-                        <?php if (!empty($listing->getImage())): ?>
-                            <img src="public/uploads/<?php echo htmlspecialchars($listing->getImage()); ?>"
-                                alt="<?php echo htmlspecialchars($listing->getTitle()); ?>"
-                                class="w-full h-full object-cover">
-                        <?php else: ?>
-                            <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-9 9m-9-9l9 9" />
-                            </svg>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="flex flex-wrap p-6">
-                        <span class="text-xl font-bold text-gray-800 mb-2"><?php echo htmlspecialchars($listing->getTitle()); ?></span>
-                        <span class="text-xl text-blue-900 ml-auto"><?php echo htmlspecialchars($listing->getLocation()); ?></span>
-                    </div>
-                    <div class="flex justify-between items-center m-6 mt-0">
-                        <span class="text-2xl font-bold text-cyan-400"><?php echo htmlspecialchars($listing->getPrice()); ?> DH</span>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <div class="col-span-full flex flex-col items-center justify-center py-20">
-                <h2 class="text-2xl text-white font-bold mb-2">No listings yet</h2>
-                <?php if ($role === "host"): ?>
-                    <p class="text-white mb-6">Be the first to add a listing!</p>
-                    <a href="addListing-action" class="bg-white text-cyan-400 px-6 py-3 rounded-lg font-semibold">
-                        Create First Listing
-                    </a>
+            <button 
+                onclick="event.stopPropagation(); toggleFavorite(event, <?php echo $listing->getId(); ?>)" 
+                class="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/70 hover:bg-white transition-all shadow-md group"
+                id="fav-btn-<?php echo $listing->getId(); ?>">
+                <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    class="h-6 w-6 transition-colors duration-200 <?php echo (isset($listing->isFavorite) && $listing->isFavorite) ? 'text-red-500 fill-current' : 'text-gray-400 fill-none group-hover:text-red-400'; ?>" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor" 
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+            </button>
+            
+            <div class="h-48 bg-gradient-to-br from-indigo-400 to-cyan-400 flex items-center justify-center">
+                <?php if (!empty($listing->getImage())): ?>
+                    <img src="public/uploads/<?php echo htmlspecialchars($listing->getImage()); ?>"
+                        alt="<?php echo htmlspecialchars($listing->getTitle()); ?>"
+                        class="w-full h-full object-cover">
+                <?php else: ?>
+                    <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-9 9m-9-9l9 9" />
+                    </svg>
                 <?php endif; ?>
             </div>
-        <?php endif; ?>
+
+            <div class="flex flex-wrap p-6">
+                <span class="text-xl font-bold text-gray-800 mb-2"><?php echo htmlspecialchars($listing->getTitle()); ?></span>
+                <span class="text-xl text-blue-900 ml-auto"><?php echo htmlspecialchars($listing->getLocation()); ?></span>
+            </div>
+            <div class="flex justify-between items-center m-6 mt-0">
+                <span class="text-2xl font-bold text-cyan-400"><?php echo htmlspecialchars($listing->getPrice()); ?> DH</span>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
 
     </div>
 </main>

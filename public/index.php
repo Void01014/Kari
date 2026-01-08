@@ -2,6 +2,8 @@
     require_once "../app/models/User.php";
     require_once "../app/models/Listing.php";
     require_once "../app/models/Booking.php";
+    require_once "../app/models/Email.php";
+    require_once "../app/models/PDF.php";
     require_once "../app/core/Database.php";
     require_once "../app/controllers/AuthController.php";
     require_once "../app/controllers/HomeController.php";

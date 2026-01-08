@@ -90,7 +90,7 @@ class Booking
 
     public function getListingData()
     {
-        $sql = "SELECT price_per_night, hostID FROM listing WHERE id = :listing_id";
+        $sql = "SELECT title, location, price_per_night, hostID FROM listing WHERE id = :listing_id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':listing_id' => $this->listing_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -116,7 +116,7 @@ class Booking
             ]
         );
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchColumn() == 0;
     }
 
     ////////////////////////////////////////////
