@@ -88,34 +88,16 @@ class Booking
 
     ////////////////////////////////////////////
 
-    public function getListingData(){
+    public function getListingData()
+    {
         $sql = "SELECT price_per_night, hostID FROM listing WHERE id = :listing_id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':listing_id' => $this->listing_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
-    ////////////////////////////////////////////
-
-    public function push()
-    {
-        $sql = "INSERT INTO bookings (listing_id, host_id, traveler_id, start_date, end_date, guests, total_price, status)
-            VALUES (:listing_id, :host_id, :traveler_id, :start_date, :end_date, :guests, :total_price, 'confirmed')";
-
-        $stmt = $this->pdo->prepare($sql);
-
-        return $stmt->execute([
-            ':listing_id'  => $this->listing_id,
-            ':host_id'     => $this->host_id,
-            ':traveler_id' => $this->traveler_id,
-            ':start_date'  => $this->start_date->format('Y-m-d'),  
-            ':end_date'    => $this->end_date->format('Y-m-d'), 
-            ':guests'      => $this->guests, 
-            ':total_price' => $this->total_price
-        ]);
-    }
 
     ////////////////////////////////////////////
+
 
     public function isAvailable($listing_id, $start_date, $end_date)
     {
@@ -135,5 +117,25 @@ class Booking
         );
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    ////////////////////////////////////////////
+
+    public function push()
+    {
+        $sql = "INSERT INTO bookings (listing_id, host_id, traveler_id, start_date, end_date, guests, total_price, status)
+            VALUES (:listing_id, :host_id, :traveler_id, :start_date, :end_date, :guests, :total_price, 'confirmed')";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([
+            ':listing_id'  => $this->listing_id,
+            ':host_id'     => $this->host_id,
+            ':traveler_id' => $this->traveler_id,
+            ':start_date'  => $this->start_date->format('Y-m-d'),
+            ':end_date'    => $this->end_date->format('Y-m-d'),
+            ':guests'      => $this->guests,
+            ':total_price' => $this->total_price
+        ]);
     }
 }

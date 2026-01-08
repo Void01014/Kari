@@ -117,11 +117,11 @@ if (isset($_SESSION['user_object'])) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-gray-700 mb-2 font-semibold">Check-In</label>
-                        <input type="date" name="start_date" id="checkIn" class="w-full px-4 py-3 border rounded-lg" required>
+                        <input type="text" name="start_date" id="checkIn" placeholder="Select a date" class="w-full px-4 py-3 border rounded-lg" required>
                     </div>
                     <div>
                         <label class="block text-gray-700 mb-2 font-semibold">Check_Out</label>
-                        <input type="date" name="end_date" id="checkOut" class="w-full px-4 py-3 border rounded-lg" required>
+                        <input type="text" name="end_date" id="checkOut" placeholder="Select a date" class="w-full px-4 py-3 border rounded-lg" required>
                     </div>
                 </div>
 
@@ -167,4 +167,5 @@ if (isset($_SESSION['user_object'])) {
 <script>
     const userRole = "<?php echo $role ?? ''; ?>";
     const userId = <?php echo $userId ?? 'null'; ?>;
+    const disabled_dates = <?= json_encode($disabled_dates) ?>;
 </script>

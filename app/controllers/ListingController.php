@@ -25,6 +25,7 @@
 
         public function showAllListings(){
             $listings = Listing::getAllListings($this->pdo);
+            $disabled_dates = Listing::getDisabledDate($this->pdo);
             $pageTitle = "allListings";
 
             ob_start();

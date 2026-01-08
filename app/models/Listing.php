@@ -19,36 +19,45 @@ class Listing
 
     ////////////////////////////////////////////
 
-    public function getID(){
+    public function getID()
+    {
         return $this->id;
     }
-    public function getHostID(){
+    public function getHostID()
+    {
         return $this->hostID;
     }
-    public function getHostName(){
+    public function getHostName()
+    {
         return $this->hostName;
     }
-    public function getTitle(){
+    public function getTitle()
+    {
         return $this->title;
     }
-    public function getDescription(){
+    public function getDescription()
+    {
         return $this->description;
     }
-    public function getPrice(){
+    public function getPrice()
+    {
         return $this->price_per_night;
     }
-    public function getLocation(){
+    public function getLocation()
+    {
         return $this->location;
     }
-    public function getImage(){
+    public function getImage()
+    {
         return $this->image_url;
     }
-    public function getPubDate(){
+    public function getPubDate()
+    {
         return $this->publish_date;
     }
-    
+
     ////////////////////////////////////////////
-    
+
     private function validateTitle()
     {
         return strlen($this->title) >= 3;
@@ -131,5 +140,12 @@ class Listing
         $sql = "SELECT listing.*, users.id AS hostID,users.username AS hostName FROM listing JOIN users ON listing.hostID = users.id HAVING status='active'";
         $stmt = $pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_CLASS, 'Listing', [$pdo]);
+    }
+
+    public static function getDisabledDate($pdo)
+    {
+        $sql = "SELECT listing_id AS id, start_date as 'from', end_date AS 'to' FROM bookings WHERE status = 'confirmed'";
+        $stmt = $pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

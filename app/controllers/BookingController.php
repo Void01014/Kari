@@ -17,10 +17,11 @@
             $guests = $_POST['guests'];
             $start_date = new DateTime($_POST['start_date'])    ;
             $end_date = new DateTime($_POST['end_date']);
+
             $booking = new Booking($this->pdo);
             $booking->setListingID($listing_id);
             $listingData = $booking->getListingData();
-            var_dump($listingData);
+            
             if($listingData){
                 $price_per_night=  $listingData['price_per_night'];
                 $interval = $start_date->diff($end_date);
