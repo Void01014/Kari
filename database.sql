@@ -36,3 +36,13 @@ CREATE TABLE bookings (
     FOREIGN KEY (listing_id) REFERENCES listing(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE (
+id INT AUTO_INCREMENT PRIMARY KEY,
+    traveler_id INT NOT NULL,
+    listing_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_fav (user_id, listing_id),
+    FOREIGN KEY (traveler_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (listing_id) REFERENCES listing(id) ON DELETE CASCADE   
+)

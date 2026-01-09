@@ -47,13 +47,8 @@ function showBookingForm(listingId, price) {
 
 function updateDisabledDates(currentId) {
     let disabled_dates_temp = [];
-    
-    console.log("Filtering for Listing ID:", currentId); // Debug line
 
     disabled_dates_objects.forEach(item => {
-        console.log(item.id);
-        console.log(currentId);
-        // Use String() to ensure "3" matches 3
         if (String(item.id) === String(currentId)) {
             disabled_dates_temp.push({
                 from: item.dates[0],
@@ -61,8 +56,6 @@ function updateDisabledDates(currentId) {
             });
         }
     });
-
-    console.log("Dates found:", disabled_dates_temp); // Debug line
 
     if (checkIn_pickr && checkOut_pickr) {
         checkIn_pickr.set("disable", disabled_dates_temp);

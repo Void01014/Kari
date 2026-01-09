@@ -1,6 +1,7 @@
 <?php
     require_once "../app/models/User.php";
     require_once "../app/models/Listing.php";
+    require_once "../app/models/Favorite.php";
     require_once "../app/models/Booking.php";
     require_once "../app/models/Email.php";
     require_once "../app/models/PDF.php";
@@ -66,6 +67,9 @@
             break;
         case 'book-action':
             $bookingController->registerBooking();         
+            break;
+        case 'toggle-favorite-action':
+            $listingController->toggleFavorite();         
             break;
         case 'logout-action':
             $authController->logout();         

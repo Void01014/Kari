@@ -6,6 +6,31 @@ if (isset($_SESSION['user_object'])) {
 ?>
 
 <main class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
+        <h1 class="text-4xl font-bold text-white">Browse Listings</h1>
+        
+        <div class="relative w-full md:w-96">
+            <input type="text" 
+                   id="searchInput" 
+                   placeholder="Search by city or title..." 
+                   class="w-full px-6 py-3 rounded-full bg-gray-900/20 border border-white/45 placeholder-white/70 focus:outline-none focus:bg-white focus:placeholder-gray-400 transition-all duration-300"
+            >
+            <div class="absolute right-4 top-3.5 text-white/70 pointer-events-none" id="searchIcon">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+        </div>
+
+        <?php if ($role === "host"): ?>
+            <a href="addListing-action" class="bg-white text-cyan-400 px-6 py-3 rounded-lg font-semibold hover:shadow-[0_0_15px_white] hover:scale-105 transition duration-200">
+                + Add Listing
+            </a>
+        <?php endif; ?>
+    </div>
+
+    <div id="listingsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    </div>
     <?php if ($role === "host"): ?>
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-4xl font-bold text-white">Browse Listings</h1>
@@ -17,57 +42,56 @@ if (isset($_SESSION['user_object'])) {
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-    <?php if (!empty($listings)): ?>
-    <?php foreach ($listings as $listing): ?>
-        <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] hover:scale-105 transition duration-300 cursor-pointer relative"
-            onclick='openModal(<?php echo json_encode([
-                "id" => $listing->getId(),
-                "title" => $listing->getTitle(),
-                "description" => $listing->getDescription(),
-                "price" => $listing->getPrice(),
-                "image" => $listing->getImage(),
-                "location" => $listing->getLocation(),
-                "hostId" => $listing->getHostID(),
-                "hostName" => $listing->getHostName()
-            ]); ?>)'>
+        <?php if (!empty($listings)): ?>
+            <?php foreach ($listings as $listing): ?>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] hover:scale-105 transition duration-300 cursor-pointer relative"
+                    onclick='openModal(<?php echo json_encode([
+                                            "id" => $listing->getId(),
+                                            "title" => $listing->getTitle(),
+                                            "description" => $listing->getDescription(),
+                                            "price" => $listing->getPrice(),
+                                            "image" => $listing->getImage(),
+                                            "location" => $listing->getLocation(),
+                                            "hostId" => $listing->getHostID(),
+                                            "hostName" => $listing->getHostName()
+                                        ]); ?>)'>
 
-            <button 
-                onclick="event.stopPropagation(); toggleFavorite(event, <?php echo $listing->getId(); ?>)" 
-                class="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/70 hover:bg-white transition-all shadow-md group"
-                id="fav-btn-<?php echo $listing->getId(); ?>">
-                <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    class="h-6 w-6 transition-colors duration-200 <?php echo (isset($listing->isFavorite) && $listing->isFavorite) ? 'text-red-500 fill-current' : 'text-gray-400 fill-none group-hover:text-red-400'; ?>" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor" 
-                    stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-            </button>
-            
-            <div class="h-48 bg-gradient-to-br from-indigo-400 to-cyan-400 flex items-center justify-center">
-                <?php if (!empty($listing->getImage())): ?>
-                    <img src="public/uploads/<?php echo htmlspecialchars($listing->getImage()); ?>"
-                        alt="<?php echo htmlspecialchars($listing->getTitle()); ?>"
-                        class="w-full h-full object-cover">
-                <?php else: ?>
-                    <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-9 9m-9-9l9 9" />
-                    </svg>
-                <?php endif; ?>
-            </div>
+                    <button
+                        onclick="event.stopPropagation(); toggleFavorite(event, <?php echo $listing->getId(); ?>)"
+                        class="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/70 hover:bg-white transition-all shadow-md group"
+                        id="fav-btn-<?php echo $listing->getId(); ?>">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 transition-colors duration-200 <?php echo (isset($listing->isFavorite) && $listing->isFavorite) ? 'text-red-500 fill-current' : 'text-gray-400 fill-none group-hover:text-red-400'; ?>"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </button>
 
-            <div class="flex flex-wrap p-6">
-                <span class="text-xl font-bold text-gray-800 mb-2"><?php echo htmlspecialchars($listing->getTitle()); ?></span>
-                <span class="text-xl text-blue-900 ml-auto"><?php echo htmlspecialchars($listing->getLocation()); ?></span>
-            </div>
-            <div class="flex justify-between items-center m-6 mt-0">
-                <span class="text-2xl font-bold text-cyan-400"><?php echo htmlspecialchars($listing->getPrice()); ?> DH</span>
-            </div>
-        </div>
-    <?php endforeach; ?>
-<?php endif; ?>
+                    <div class="h-48 bg-gradient-to-br from-indigo-400 to-cyan-400 flex items-center justify-center">
+                        <?php if (!empty($listing->getImage())): ?>
+                            <img src="public/uploads/<?php echo htmlspecialchars($listing->getImage()); ?>"
+                                alt="<?php echo htmlspecialchars($listing->getTitle()); ?>"
+                                class="w-full h-full object-cover">
+                        <?php else: ?>
+                            <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-9 9m-9-9l9 9" />
+                            </svg>
+                        <?php endif; ?>
+                    </div>
 
+                    <div class="flex flex-wrap p-6">
+                        <span class="text-xl font-bold text-gray-800 mb-2"><?php echo htmlspecialchars($listing->getTitle()); ?></span>
+                        <span class="text-xl text-blue-900 ml-auto"><?php echo htmlspecialchars($listing->getLocation()); ?></span>
+                    </div>
+                    <div class="flex justify-between items-center m-6 mt-0">
+                        <span class="text-2xl font-bold text-cyan-400"><?php echo htmlspecialchars($listing->getPrice()); ?> DH</span>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 </main>
 <?php ?>
@@ -172,4 +196,42 @@ if (isset($_SESSION['user_object'])) {
     const userRole = "<?php echo $role ?? ''; ?>";
     const userId = <?php echo $userId ?? 'null'; ?>;
     const disabled_dates = <?= json_encode($disabled_dates) ?>;
+
+    function toggleFavorite(event, listingId) {
+        event.stopPropagation();
+        if (userId === null) {
+            return;
+        }
+
+        const btn = document.getElementById(`fav-btn-${listingId}`);
+        const svg = btn.querySelector('svg');
+
+        const isAdding = svg.classList.contains('fill-none');
+
+        if (isAdding) {
+            svg.classList.replace('text-gray-400', 'text-red-500');
+            svg.classList.replace('fill-none', 'fill-current');
+        } else {
+            svg.classList.replace('text-red-500', 'text-gray-400');
+            svg.classList.replace('fill-current', 'fill-none');
+        }
+
+        fetch('toggle-favorite-action', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `listing_id=${listingId}`
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                if (!data.success) {
+                    alert("Error updating favorite. Try again!");
+                    location.reload();
+                }
+            })
+            .catch(err => {
+                console.error('AJAX Error:', err);
+            });
+    }
 </script>

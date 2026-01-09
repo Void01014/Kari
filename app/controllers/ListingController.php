@@ -24,7 +24,9 @@
         }
 
         public function showAllListings(){
-            $listings = Listing::getAllListings($this->pdo);
+            $traveler_id = $_SESSION['user_object']->getID();
+        
+            $listings = Listing::getAllListings($this->pdo, $traveler_id);
             $disabled_dates = Listing::getDisabledDate($this->pdo);
             $pageTitle = "allListings";
 
@@ -35,6 +37,27 @@
             
             include "../app/views/main.php";
             
+        }
+
+        ////////////////////////////////////////////
+
+        public function toggleFavorite(){
+            header('Content-Type: application/json');
+
+            if (!isset($_SESSION['user_object'])) {
+                echo json_encode(['success' => false, 'message' => 'Login required']);
+                exit;
+            }
+            $listing_id = $_POST['listing_id'];
+            $traveler_id = $_SESSION['user_object']->getID();
+
+            if(Favorite::isAlreadyFavorited($this->pdo, $listing_id, $traveler_id))
+                $result = Favorite::removeFromFavorite($this->pdo, $listing_id, $traveler_id);
+            else{
+                $result = Favorite::addToFavorite($this->pdo, $listing_id, $traveler_id);
+            }
+            echo json_encode(['success' => $result]);
+            exit;
         }
         
         ////////////////////////////////////////////
