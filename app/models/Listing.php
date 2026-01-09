@@ -134,17 +134,35 @@ class Listing
 
     ////////////////////////////////////////////
 
-    public static function getAllListings($pdo, $traveler_id)
+    public static function getAllListings($pdo, $traveler_id, $city = null, $min = null, $max = null)
     {
-        $listings = [];
-        $sql = "SELECT l.*,
-                IF(f.id IS NOT NULL, 1, 0) AS isFavorite
-                FROM listing l
-                LEFT JOIN favorites f ON l.id = f.listing_id AND f.traveler_id = :traveler_id";
+        $sql = "SELECT l.*, 
+            IF(f.id IS NOT NULL, 1, 0) AS isFavorite 
+            FROM listing l 
+            LEFT JOIN favorites f ON l.id = f.listing_id AND f.traveler_id = :traveler_id 
+            WHERE 1=1"; // 'WHERE 1=1' is a "dummy" condition so we can keep adding 'AND'
 
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([':traveler_id' => $traveler_id]);
-        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Listing', [$pdo]);
+    $params = [':traveler_id' => $traveler_id];
+
+    // 2. Add conditions ONLY if they aren't empty
+    if (!empty($city)) {
+        $sql .= " AND l.location LIKE :city";
+        $params[':city'] = "%$city%";
+    }
+
+    if (!empty($min)) {
+        $sql .= " AND l.price_per_night >= :min";
+        $params[':min'] = $min;
+    }
+
+    if (!empty($max)) {
+        $sql .= " AND l.price_per_night <= :max";
+        $params[':max'] = $max;
+    }
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_CLASS, 'Listing', [$pdo]);
     }
 
     public static function getDisabledDate($pdo)

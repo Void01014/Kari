@@ -5,32 +5,8 @@ if (isset($_SESSION['user_object'])) {
 }
 ?>
 
-<main class="container mx-auto px-4 py-8">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
-        <h1 class="text-4xl font-bold text-white">Browse Listings</h1>
-        
-        <div class="relative w-full md:w-96">
-            <input type="text" 
-                   id="searchInput" 
-                   placeholder="Search by city or title..." 
-                   class="w-full px-6 py-3 rounded-full bg-gray-900/20 border border-white/45 placeholder-white/70 focus:outline-none focus:bg-white focus:placeholder-gray-400 transition-all duration-300"
-            >
-            <div class="absolute right-4 top-3.5 text-white/70 pointer-events-none" id="searchIcon">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-            </div>
-        </div>
-
-        <?php if ($role === "host"): ?>
-            <a href="addListing-action" class="bg-white text-cyan-400 px-6 py-3 rounded-lg font-semibold hover:shadow-[0_0_15px_white] hover:scale-105 transition duration-200">
-                + Add Listing
-            </a>
-        <?php endif; ?>
-    </div>
-
-    <div id="listingsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    </div>
+<h1 class="text-4xl font-bold text-white mt-10">Browse Listings</h1>
+<main class="container mx-0 px-4 py-8">
     <?php if ($role === "host"): ?>
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-4xl font-bold text-white">Browse Listings</h1>
@@ -40,7 +16,30 @@ if (isset($_SESSION['user_object'])) {
         </div>
     <?php endif; ?>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="mb-10 p-6 bg-gray-500/10 rounded-3xl backdrop-blur-sm border border-white/40">
+        <form action="allListings" method="GET" class="flex lg:flex-row justify-center items-end gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full lg:w-3/4">
+                <div>
+                    <label class="block text-white text-xs mb-1 ml-2">City</label>
+                    <input type="text" name="city" id="filterCity" placeholder="e.g. Rabat" class="w-full px-4 py-2 rounded-xl bg-white text-gray-800 focus:ring-2 focus:ring-cyan-400 outline-none">
+                </div>
+                <div>
+                    <label class="block text-white text-xs mb-1 ml-2">Min Price (DH)</label>
+                    <input type="number" name="min_price" id="filterMin" placeholder="0" class="w-full px-4 py-2 rounded-xl bg-white text-gray-800 focus:ring-2 focus:ring-cyan-400 outline-none">
+                </div>
+                <div>
+                    <label class="block text-white text-xs mb-1 ml-2">Max Price (DH)</label>
+                    <input type="number" name="max_price" id="filterMax" placeholder="10000" class="w-full px-4 py-2 rounded-xl bg-white text-gray-800 focus:ring-2 focus:ring-cyan-400 outline-none">
+                </div>
+            </div>
+            <button type="submit" class="bg-white text-cyan-400 px-6 py-2.5 rounded-xl font-bold hover:scale-105 transition transform duration-200 cursor-pointer">Search</button>
+            <?php if ($role === "host"): ?>
+                <a href="addListing-action" class="bg-white text-cyan-400 px-6 py-2.5 rounded-xl font-bold hover:scale-105 transition transform duration-200"> + Add Listing </a>
+            <?php endif; ?>
+        </form>
+    </div>
+
+    <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
         <?php if (!empty($listings)): ?>
             <?php foreach ($listings as $listing): ?>
@@ -223,7 +222,7 @@ if (isset($_SESSION['user_object'])) {
                 },
                 body: `listing_id=${listingId}`
             })
-            .then(response => response.json()) 
+            .then(response => response.json())
             .then(data => {
                 if (!data.success) {
                     alert("Error updating favorite. Try again!");

@@ -25,8 +25,11 @@
 
         public function showAllListings(){
             $traveler_id = $_SESSION['user_object']->getID();
+            $city = $_GET['city'] ?? null;
+            $min = $_GET['min_price'] ?? null;
+            $max = $_GET['max_price'] ?? null;
         
-            $listings = Listing::getAllListings($this->pdo, $traveler_id);
+            $listings = Listing::getAllListings($this->pdo, $traveler_id, $city, $min, $max);
             $disabled_dates = Listing::getDisabledDate($this->pdo);
             $pageTitle = "allListings";
 
