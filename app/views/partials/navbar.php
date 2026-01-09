@@ -11,7 +11,7 @@
         <?php
         if (isset($_SESSION['user_object'])) {
             $role = $_SESSION['user_object']->getRole() ?? '';
-        }else{
+        } else {
             $role = '';
         }
         ?>
@@ -61,6 +61,15 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
                     Add Listing
+                </a>
+            <?php endif; ?>
+            <?php if ($role === 'traveler'): ?>
+                <a href="myBookings" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    My Bookings
                 </a>
             <?php endif; ?>
         </div>

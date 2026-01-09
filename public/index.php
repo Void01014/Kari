@@ -68,6 +68,9 @@
         case 'book-action':
             $bookingController->registerBooking();         
             break;
+        case 'myBookings':
+            $bookingController->showMyBookings();         
+            break;
         case 'toggle-favorite-action':
             $listingController->toggleFavorite();         
             break;

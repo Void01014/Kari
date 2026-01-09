@@ -12,7 +12,7 @@
         ////////////////////////////////////////////
 
         public function showHome(){
-            $pageTitle = "home";
+            $pageTitle = "Home";
 
             ob_start();
             include "../app/views/home/home.php";

@@ -12,7 +12,7 @@
         ////////////////////////////////////////////
 
         public function showProfile(){
-            $pageTitle = "profile";
+            $pageTitle = "Profile";
 
             ob_start();
             include  "../app/views/user/profile.php";

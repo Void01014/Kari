@@ -12,7 +12,7 @@
         ////////////////////////////////////////////
         
         public function showListingForm(){
-            $pageTitle = "ListingForm";
+            $pageTitle = "Add a Listing";
 
             ob_start();
             include "../app/views/listings/addListing.php";
@@ -31,7 +31,7 @@
         
             $listings = Listing::getAllListings($this->pdo, $traveler_id, $city, $min, $max);
             $disabled_dates = Listing::getDisabledDate($this->pdo);
-            $pageTitle = "allListings";
+            $pageTitle = "Browse Listings";
 
             ob_start();
             include "../app/views/listings/listings.php";

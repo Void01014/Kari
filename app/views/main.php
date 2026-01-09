@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <title>Listings</title>
+    <title><?php echo $pageTitle ?? 'Default Title'; ?></title>
     <style>
         body {
             margin: 0;
@@ -176,6 +176,9 @@
     <?php elseif($url == "signIn"): ?>
         <script src="/Kari/public/js/signIn.js"></script>
     <?php elseif($url == "allListings"): ?>
-        <script src="/Kari/public/js/listings.js"></script>
+        <script src="/Kari/public/js/modal-core.js"></script>
+        <script src="/Kari/public/js/bookingForm.js"></script>
+    <?php elseif($url == "myBookings"): ?>
+        <script src="/Kari/public/js/modal-core.js"></script>
     <?php endif; ?>
 </html>

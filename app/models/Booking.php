@@ -10,6 +10,7 @@ class Booking
     private $start_date;
     private $end_date;
     private $guests;
+    private $listing;
 
     public function __construct($pdo)
     {
@@ -137,5 +138,48 @@ class Booking
             ':guests'      => $this->guests,
             ':total_price' => $this->total_price
         ]);
+    }
+
+    ///////////////////////////////////////////
+
+    public static function getBookingsByTraveler($pdo, $travelerId)
+    {
+        $sql = "SELECT b.*, l.title, l.location, l.image_url 
+            FROM bookings b 
+            JOIN listing l ON b.listing_id = l.id 
+            WHERE b.traveler_id = :traveler_id";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':traveler_id' => $travelerId]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $bookings = [];
+        foreach ($rows as $row) {
+            $booking = new Booking($pdo);
+            $booking->setId($row['id']);
+            $booking->setTotalPrice($row['total_price']);
+            $booking->setStartDate($row['start_date']);
+            $booking->setEndDate($row['end_date']);
+
+            $listing = new Listing($pdo);
+            $listing->setID($row['listing_id']);
+            $listing->setTitle($row['title']);
+            $listing->setLocation($row['location']);
+            $listing->setImage($row['image_url']);
+
+            $booking->setListing($listing);
+            $bookings[] = $booking;
+        }
+        return $bookings;
+    }
+
+    public function setListing($listing)
+    {
+        $this->listing = $listing;
+    }
+
+    public function getListing()
+    {
+        return $this->listing;
     }
 }

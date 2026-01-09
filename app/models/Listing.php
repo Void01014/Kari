@@ -81,6 +81,10 @@ class Listing
 
     ////////////////////////////////////////////
 
+    public function setID($id)
+    {
+        $this->id = $id;
+    }
     public function setHostID($hostID)
     {
         $this->hostID = $hostID;
@@ -140,11 +144,10 @@ class Listing
             IF(f.id IS NOT NULL, 1, 0) AS isFavorite 
             FROM listing l 
             LEFT JOIN favorites f ON l.id = f.listing_id AND f.traveler_id = :traveler_id 
-            WHERE 1=1"; // 'WHERE 1=1' is a "dummy" condition so we can keep adding 'AND'
+            WHERE 1=1";
 
     $params = [':traveler_id' => $traveler_id];
 
-    // 2. Add conditions ONLY if they aren't empty
     if (!empty($city)) {
         $sql .= " AND l.location LIKE :city";
         $params[':city'] = "%$city%";
@@ -156,8 +159,8 @@ class Listing
     }
 
     if (!empty($max)) {
-        $sql .= " AND l.price_per_night <= :max";
-        $params[':max'] = $max;
+        $sql .= "AND l.price_per_night <= max";
+        $params['max'] = $max;
     }
 
     $stmt = $pdo->prepare($sql);

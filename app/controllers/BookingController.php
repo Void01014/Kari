@@ -66,5 +66,24 @@
                 exit();
             }
         }
+
+        /////////////////////////////////////////////////////
+
+        public function showMyBookings(){
+            $traveler_id = $_SESSION['user_object']->getID();
+
+            $pageTitle = 'My Bookings';
+
+            $bookings = Booking::getBookingsByTraveler($this->pdo, $traveler_id);
+            
+
+
+            ob_start();
+            include "../app/views/bookings/myBookings.php";
+
+            $content = ob_get_clean();
+
+            include "../app/views/main.php"; 
+        }
     }
 ?>
