@@ -5,7 +5,7 @@ if (isset($_SESSION['user_object'])) {
 }
 ?>
 
-<h1 class="text-4xl font-bold text-white mt-10">Browse Listings</h1>
+<h1 class="text-4xl font-bold text-white mt-10">My Bookings</h1>
 <main class="container mx-auto px-4 py-8"> <div class="flex justify-between items-center mt-10 mb-8">
         <h1 class="text-4xl font-bold text-white">
             <?php echo ($role === 'host') ? 'My Listings' : 'My Bookings'; ?>
@@ -36,9 +36,6 @@ if (isset($_SESSION['user_object'])) {
                         "hostName" => $listing->getHostName()
                     ]), ENT_QUOTES, "UTF-8"); ?>)'>
 
-                    <div class="absolute top-4 left-4 z-20 bg-cyan-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">
-                        Booked
-                    </div>
                     <div class="h-48 bg-gradient-to-br from-indigo-400 to-cyan-400 flex items-center justify-center">
                         <?php if ($listing->getImage()): ?>
                             <img src="public/uploads/<?php echo htmlspecialchars($listing->getImage()); ?>"
@@ -66,7 +63,8 @@ if (isset($_SESSION['user_object'])) {
 
                         <div class="flex justify-between items-center border-t pt-4">
                             <span class="text-xs text-gray-400 uppercase tracking-wider">Booking Status</span>
-                            <span class="text-lg font-bold text-green-500">Confirmed</span>
+                            <?php $color = ($booking->getStatus() == 'confirmed') ? 'green-400' : 'blue-500' ?>
+                            <span class="text-lg font-bold text-<?= $color ?>"><?= $booking->getStatus() ?></span>
                         </div>
                     </div>
                 </div>

@@ -36,6 +36,8 @@
         header('Location: /Kari/home');
         exit();
     }
+    
+    Booking::updateExpiredBookings($pdo);
 
     switch ($url){
         case 'signUp':

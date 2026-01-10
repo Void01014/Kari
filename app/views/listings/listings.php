@@ -33,9 +33,6 @@ if (isset($_SESSION['user_object'])) {
                 </div>
             </div>
             <button type="submit" class="bg-white text-cyan-400 px-6 py-2.5 rounded-xl font-bold hover:scale-105 transition transform duration-200 cursor-pointer">Search</button>
-            <?php if ($role === "host"): ?>
-                <a href="addListing-action" class="bg-white text-cyan-400 px-6 py-2.5 rounded-xl font-bold hover:scale-105 transition transform duration-200"> + Add Listing </a>
-            <?php endif; ?>
         </form>
     </div>
 

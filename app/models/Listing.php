@@ -140,11 +140,12 @@ class Listing
 
     public static function getAllListings($pdo, $traveler_id, $city = null, $min = null, $max = null)
     {
-        $sql = "SELECT l.*, 
-            IF(f.id IS NOT NULL, 1, 0) AS isFavorite 
-            FROM listing l 
-            LEFT JOIN favorites f ON l.id = f.listing_id AND f.traveler_id = :traveler_id 
-            WHERE 1=1";
+        $sql = "SELECT l.*, u.username as hostName,
+                IF(f.id IS NOT NULL, 1, 0) AS isFavorite 
+                FROM listing l 
+                LEFT JOIN favorites f ON l.id = f.listing_id AND f.traveler_id = :traveler_id 
+                LEFT JOIN users u ON l.hostID = u.id
+                WHERE 1=1";
 
     $params = [':traveler_id' => $traveler_id];
 

@@ -11,6 +11,7 @@ class Booking
     private $end_date;
     private $guests;
     private $listing;
+    private $status;
 
     public function __construct($pdo)
     {
@@ -51,6 +52,10 @@ class Booking
     {
         return $this->guests;
     }
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
     ////////////////////////////////////////////
 
@@ -85,6 +90,10 @@ class Booking
     public function setGuests($guests)
     {
         $this->guests = $guests;
+    }
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     ////////////////////////////////////////////
@@ -144,10 +153,12 @@ class Booking
 
     public static function getBookingsByTraveler($pdo, $travelerId)
     {
-        $sql = "SELECT b.*, l.title, l.location, l.image_url 
-            FROM bookings b 
-            JOIN listing l ON b.listing_id = l.id 
-            WHERE b.traveler_id = :traveler_id";
+        $sql = "SELECT b.*, l.title, l.location, l.image_url, l.description, u.username as hostName
+                FROM bookings b 
+                JOIN listing l ON b.listing_id = l.id 
+                LEFT JOIN users u ON l.hostID = u.id
+                WHERE b.traveler_id = :traveler_id
+                ";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':traveler_id' => $travelerId]);
@@ -160,12 +171,15 @@ class Booking
             $booking->setTotalPrice($row['total_price']);
             $booking->setStartDate($row['start_date']);
             $booking->setEndDate($row['end_date']);
+            $booking->setStatus($row['status']);
 
             $listing = new Listing($pdo);
             $listing->setID($row['listing_id']);
             $listing->setTitle($row['title']);
+            $listing->setHostName($row['hostName']);
             $listing->setLocation($row['location']);
             $listing->setImage($row['image_url']);
+            $listing->setDesc($row['description']);
 
             $booking->setListing($listing);
             $bookings[] = $booking;
@@ -181,5 +195,15 @@ class Booking
     public function getListing()
     {
         return $this->listing;
+    }
+
+    ////////////////////////////////////////////////////
+
+    public static function updateExpiredBookings($pdo)
+    {
+        return $pdo->exec("UPDATE bookings 
+                       SET status = 'completed' 
+                       WHERE end_date < CURRENT_DATE 
+                       AND status = 'confirmed'");
     }
 }

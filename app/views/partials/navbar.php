@@ -26,17 +26,19 @@
                 Profile
             </a>
 
-            <a href="allListings" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 9.5l9-7 9 7M5 10.5V20a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9.5" />
-                </svg>
+            <?php if ($role === 'traveler' || $role === 'host'): ?>
+                <a href="allListings" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 9.5l9-7 9 7M5 10.5V20a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9.5" />
+                    </svg>
 
-                Listings
-            </a>
+                    Listings
+                </a>
+            <?php endif ?>
 
             <?php if ($role === 'host'): ?>
                 <a href="myListings" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">
@@ -48,11 +50,33 @@
             <?php endif; ?>
 
             <?php if ($role === 'admin'): ?>
-                <a href="allListings" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">
+                <a href="manageUsers" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-9 9m-9-9l9 9" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1M16 3.13a4 4 0 010 7.75M8 3.13a4 4 0 000 7.75M12 7a4 4 0 110 8 4 4 0 010-8z" />
                     </svg>
-                    All Listings
+
+                    Manage Users
+                </a>
+
+                <a href="manageListings" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 10h16M4 14h16M4 18h10" />
+                    </svg>
+
+                    Manage Listings
+                </a>
+
+                <a href="statistics" class="flex items-center p-2 bg-cyan-400 rounded-2xl text-white font-semibold transition duration-150 ease-in-out shadow-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 19h16M7 16V10M12 16V6M17 16v-4" />
+                    </svg>
+                    Statistics
                 </a>
             <?php endif; ?>
             <?php if ($role === 'host'): ?>
